@@ -1,6 +1,10 @@
 <!doctype html><html lang="sv"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#080b10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="color-scheme" content="dark">
+<meta name="supported-color-schemes" content="dark">
+<meta name="theme-color" content="#000000">
 <title>Webbradio</title><style>
 *{box-sizing:border-box}body{margin:0;background:#080b10;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif}
 .app{max-width:520px;margin:auto;min-height:100svh;padding:calc(env(safe-area-inset-top) + 16px) 14px calc(env(safe-area-inset-bottom) + 18px)}
@@ -191,7 +195,30 @@ body{
 .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
 .preset{width:100%!important;height:auto!important;aspect-ratio:3.45/1!important;min-width:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:18px!important;overflow:hidden!important;background:#000!important;position:relative!important}
 .preset img,.preset.rock img,.preset.bandit img,.preset.dbk img,.preset.spotify img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover!important;object-position:center!important;margin:0!important;padding:0!important;border-radius:18px!important;display:block!important}
-</style></head><body><main class="app">
+</style>
+<style>
+/* iPhone / Safari dark-mode override */
+:root {
+  color-scheme: dark;
+  background-color: #000000;
+}
+html {
+  min-height: 100%;
+  background: #000000 !important;
+  color-scheme: dark;
+}
+body {
+  min-height: 100%;
+  background-color: #000000;
+}
+@media (prefers-color-scheme: dark) {
+  html, body {
+    background-color: #000000;
+    color: #ffffff;
+  }
+}
+</style>
+</head><body><main class="app">
 <div class="head"><b>WEBBRADIO</b><div id="clock" class="clock">--:--</div><div id="date" class="date"></div></div>
 <div class="grid">
 <button class="preset p1" data-name="P1" data-url="https://live1.sr.se/p1-mp3-96" data-srid="132" data-logo="p1-button.png"><img src="p1-button.png" alt=""></button>
