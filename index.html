@@ -1,18 +1,55 @@
-<!doctype html><html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#090b10"><title>Webbradio</title><style>*{box-sizing:border-box}body{margin:0;background:#090b10;color:white;font-family:-apple-system,sans-serif}.app{max-width:520px;margin:auto;padding:30px 16px}.clock{text-align:center;font-size:52px;font-weight:800}.now{text-align:center;background:#151922;padding:18px;border-radius:22px;margin:20px 0}.station{font-size:25px;font-weight:800}.status{color:#a7f3d0;margin-top:6px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}button{min-height:76px;border:1px solid #303744;border-radius:20px;background:#181d27;color:white;font-size:19px;font-weight:750}.wide{grid-column:1/-1}.dbk{background:#372214}.spotify{background:#12321f}.controls{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:18px}.controls button{background:#eee;color:#111}.controls .stop{background:#242a35;color:white}</style></head><body><main class="app"><div id="clock" class="clock">--:--</div><section class="now"><div id="station" class="station">Välj station</div><div id="status" class="status">Redo</div></section><section class="grid">
-<button data-name="P1" data-url="https://live1.sr.se/p1-aac-128">P1</button>
-<button data-name="P2" data-url="https://live1.sr.se/p2-aac-128">P2</button>
-<button data-name="P3" data-url="https://live1.sr.se/p3-aac-128">P3</button>
-<button data-name="P4 Sjuhärad" data-url="https://live1.sr.se/p4sju-mp3-96">P4 Sjuhärad</button>
-<button data-name="Rockklassiker" data-url="https://live-bauerse-fm.sharp-stream.com/rockklassiker_instream_se_aacp">Rockklassiker</button>
-<button data-name="Bandit Rock" data-url="https://fm02-ice.stream.khz.se/fm02_mp3">Bandit</button>
-<button class="wide dbk" data-name="Dansbandskanalen" data-url="https://stream.dbmedia.se/dbkMP3">Dansbandskanalen</button>
-<button class="wide spotify" id="spotify">Spotify</button></section>
-<section class="controls"><button id="pp">▶ Spela</button><button class="stop" id="stop">■ Stoppa</button></section><audio id="audio" playsinline></audio></main>
+<!doctype html>
+<html lang="sv"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#080b10">
+<title>Webbradio</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080b10;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif}
+.app{max-width:520px;margin:auto;min-height:100svh;padding:calc(env(safe-area-inset-top) + 18px) 15px calc(env(safe-area-inset-bottom) + 20px)}
+h1{text-align:center;font-size:18px;letter-spacing:5px;margin:0;color:#dce2ea}.clock{text-align:center;font-size:52px;font-weight:800;margin:8px 0 4px}.date{text-align:center;color:#9aa4b2;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.preset{height:100px;border:1px solid #303846;border-radius:20px;background:#151a23;color:#fff;padding:8px;overflow:hidden}
+.preset img{width:100%;height:65px;object-fit:contain;border-radius:12px}.preset span{display:block;font-size:14px;font-weight:700;margin-top:3px}
+.logoText{font-size:24px;font-weight:900}.p1{background:#087f91}.p2{background:#d94a00}.p3{background:#087c54}.p4{background:#89136e}
+.rock{background:#171717}.bandit{background:#2b0b08}.dbk{background:#553112}.spotify{background:#0d2c1b}
+.now{margin-top:14px;background:#121821;border:1px solid #29313d;border-radius:23px;padding:16px;display:grid;grid-template-columns:76px 1fr;gap:14px;align-items:center}
+.now img{width:76px;height:76px;border-radius:15px;object-fit:cover;background:#222}.nowTitle{font-size:23px;font-weight:800}.program{font-size:16px;margin-top:4px}.meta{font-size:13px;color:#9ca8b8;margin-top:5px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.controls button{height:60px;border:0;border-radius:18px;font-size:18px;font-weight:800}.play{background:#e9eef5;color:#111}.stop{background:#252c37;color:#fff}
+.note{text-align:center;color:#697587;font-size:11px;margin:12px 8px}.active{outline:3px solid #fff}
+</style></head><body><main class="app">
+<h1>WEBBRADIO</h1><div class="clock" id="clock">--:--</div><div class="date" id="date"></div>
+<div class="grid">
+<button class="preset p1" data-name="P1" data-url="https://live1.sr.se/p1-mp3-96" data-srid="132" data-logo="https://static-cdn.sr.se/images/132/4a5e66b7-c935-415d-a524-c060ea227de2.jpg?preset=api-default-square"><img src="https://static-cdn.sr.se/images/132/4a5e66b7-c935-415d-a524-c060ea227de2.jpg?preset=api-default-square"><span>P1</span></button>
+<button class="preset p2" data-name="P2" data-url="https://live1.sr.se/p2-mp3-96" data-srid="163" data-logo="https://static-cdn.sr.se/images/163/684f7bac-3e2e-4a7a-969e-6892b70069d6.jpg?preset=api-default-square"><img src="https://static-cdn.sr.se/images/163/684f7bac-3e2e-4a7a-969e-6892b70069d6.jpg?preset=api-default-square"><span>P2</span></button>
+<button class="preset p3" data-name="P3" data-url="https://live1.sr.se/p3-mp3-96" data-srid="164" data-logo="https://static-cdn.sr.se/images/164/1adb95c9-cc4e-452f-b1ed-0602b3e15c46.jpg?preset=api-default-square"><img src="https://static-cdn.sr.se/images/164/1adb95c9-cc4e-452f-b1ed-0602b3e15c46.jpg?preset=api-default-square"><span>P3</span></button>
+<button class="preset p4" data-name="P4 Sjuhärad" data-url="https://live1.sr.se/p4sju-mp3-96" data-srid="206" data-logo="https://static-cdn.sr.se/images/206/44d3f4f5-66a7-4afb-bc58-0cb3caa79e61.jpg?preset=api-default-square"><img src="https://static-cdn.sr.se/images/206/44d3f4f5-66a7-4afb-bc58-0cb3caa79e61.jpg?preset=api-default-square"><span>P4 Sjuhärad</span></button>
+<button class="preset rock" data-name="Rockklassiker" data-url="https://live-bauerse-fm.sharp-stream.com/rockklassiker_instream_se_aacp"><div class="logoText">♦ ROCK<br>KLASSIKER</div><span>Rockklassiker</span></button>
+<button class="preset bandit" data-name="Bandit Rock" data-url="https://fm02-ice.stream.khz.se/fm02_mp3"><div class="logoText">BANDIT<br>ROCK</div><span>Bandit</span></button>
+<button class="preset dbk" data-name="Dansbandskanalen" data-url="https://stream.dbmedia.se/dbkMP3"><div class="logoText">DANSBANDS<br>KANALEN</div><span>Dansbandskanalen</span></button>
+<button class="preset spotify" id="spotify"><div class="logoText">● Spotify</div><span>Öppna Spotify</span></button>
+</div>
+<section class="now"><img id="nowLogo" alt=""><div><div class="nowTitle" id="nowTitle">Välj station</div><div class="program" id="program">Redo</div><div class="meta" id="meta">Aktuell programinformation visas för Sveriges Radio.</div></div></section>
+<div class="controls"><button class="play" id="pp">▶ Spela</button><button class="stop" id="stop">■ Stoppa</button></div>
+<div class="note">Programinformationen för SR uppdateras automatiskt var 30:e sekund.</div>
+<audio id="audio" playsinline preload="none"></audio>
 <script>
-const a=document.getElementById("audio"),st=document.getElementById("station"),status=document.getElementById("status"),pp=document.getElementById("pp");let cur=null;
-function clock(){document.getElementById("clock").textContent=new Date().toLocaleTimeString("sv-SE",{hour:"2-digit",minute:"2-digit"})}clock();setInterval(clock,1000);
-document.querySelectorAll("button[data-url]").forEach(b=>b.onclick=async()=>{cur=b;st.textContent=b.dataset.name;status.textContent="Ansluter…";a.src=b.dataset.url;try{await a.play();status.textContent="● Live";pp.textContent="⏸ Pausa"}catch(e){status.textContent="Kunde inte starta strömmen"}});
-pp.onclick=async()=>{if(!cur)return;if(a.paused){try{await a.play();pp.textContent="⏸ Pausa";status.textContent="● Live"}catch(e){}}else{a.pause();pp.textContent="▶ Spela";status.textContent="Pausad"}};
-document.getElementById("stop").onclick=()=>{a.pause();a.removeAttribute("src");a.load();cur=null;st.textContent="Välj station";status.textContent="Stoppad";pp.textContent="▶ Spela"};
-document.getElementById("spotify").onclick=()=>{a.pause();location.href="spotify://";setTimeout(()=>location.href="https://open.spotify.com/",900)};
-</script></body></html>
+const a=document.getElementById('audio'), title=document.getElementById('nowTitle'), prog=document.getElementById('program'), meta=document.getElementById('meta'), logo=document.getElementById('nowLogo'), pp=document.getElementById('pp');
+let cur=null;
+function tick(){let d=new Date();clock.textContent=d.toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});date.textContent=d.toLocaleDateString('sv-SE',{weekday:'long',day:'numeric',month:'long'})}tick();setInterval(tick,1000);
+function srDate(v){if(!v)return null; let m=/\/Date\((\d+)/.exec(v);return m?new Date(+m[1]):new Date(v)}
+async function updateSR(){
+ if(!cur||!cur.dataset.srid)return;
+ try{
+  const r=await fetch(`https://api.sr.se/api/v2/scheduledepisodes/rightnow?channelid=${cur.dataset.srid}&format=json`);
+  const j=await r.json(), c=j.channel&&j.channel.currentscheduledepisode;
+  if(c){prog.textContent=c.title||c.program?.name||'Pågår nu';let s=srDate(c.starttimeutc),e=srDate(c.endtimeutc);meta.textContent=(s&&e)?`${s.toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'})}–${e.toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'})}`:'Direktsändning';}
+ }catch(e){meta.textContent='Programinformation kunde inte hämtas just nu';}
+}
+document.querySelectorAll('.preset[data-url]').forEach(b=>b.onclick=async()=>{
+ document.querySelectorAll('.preset').forEach(x=>x.classList.remove('active'));b.classList.add('active');cur=b;title.textContent=b.dataset.name;logo.src=b.dataset.logo||'';prog.textContent='Ansluter…';meta.textContent=b.dataset.srid?'Hämtar programinformation…':'Live radio';
+ a.src=b.dataset.url;try{await a.play();pp.textContent='⏸ Pausa';if(!b.dataset.srid)prog.textContent='● Live';updateSR()}catch(e){prog.textContent='Kunde inte starta strömmen'}
+});
+pp.onclick=async()=>{if(!cur)return;if(a.paused){try{await a.play();pp.textContent='⏸ Pausa'}catch(e){}}else{a.pause();pp.textContent='▶ Spela'}};
+stop.onclick=()=>{a.pause();a.removeAttribute('src');a.load();pp.textContent='▶ Spela';prog.textContent='Stoppad'};
+spotify.onclick=()=>{a.pause();location.href='spotify://';setTimeout(()=>location.href='https://open.spotify.com/',800)};
+setInterval(updateSR,30000);
+</script></main></body></html>
