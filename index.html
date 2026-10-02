@@ -5,24 +5,199 @@
 *{box-sizing:border-box}body{margin:0;background:#080b10;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif}
 .app{max-width:520px;margin:auto;min-height:100svh;padding:calc(env(safe-area-inset-top) + 16px) 14px calc(env(safe-area-inset-bottom) + 18px)}
 .head{text-align:center}.head b{letter-spacing:4px;font-size:17px}.clock{font-size:49px;font-weight:850;margin-top:5px}.date{color:#9aa5b3;font-size:14px;margin:2px 0 14px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.preset{height:91px;border:1px solid #303846;border-radius:19px;color:white;padding:8px;overflow:hidden;background:#171c24}
-.preset img{width:100%;height:61px;object-fit:contain;border-radius:11px}.preset span{display:block;font-size:13px;font-weight:750;margin-top:2px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.preset{position:relative;height:105px;border:1px solid #303846;border-radius:19px;color:white;padding:0;overflow:hidden;background:#171c24}
+.preset img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:18px}.preset span{display:none}
 .fallback{font-size:21px;font-weight:900;line-height:1.05}.p1{background:#087f91}.p2{background:#d94a00}.p3{background:#087c54}.p4{background:#89136e}.rock{background:#191919}.bandit{background:#2a0b08}.dbk{background:#563212}.spotify{background:#0c2b1a}.active{outline:3px solid white}
 .now{margin-top:13px;background:#121821;border:1px solid #29313d;border-radius:22px;padding:15px;display:grid;grid-template-columns:76px 1fr;gap:13px;align-items:center}
 .art{width:76px;height:76px;border-radius:14px;object-fit:cover;background:#222}.station{font-size:22px;font-weight:850}.program{font-size:15px;margin-top:3px}.song{font-size:15px;font-weight:750;margin-top:6px;color:#dfe8f5}.meta{font-size:12px;color:#94a1b2;margin-top:4px}
 .controls{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:11px}.controls button{height:58px;border:0;border-radius:18px;font-size:17px;font-weight:850}.play{background:#edf1f6;color:#111}.stop{background:#252c37;color:white}
 .note{text-align:center;color:#657182;font-size:10px;margin:10px 6px}
+</style>
+<style>
+/* 3D radio-panel style matching the approved mockup */
+body{
+  background:
+    radial-gradient(circle at 50% -10%,#263345 0,#101720 34%,#070a0f 72%);
+}
+.grid{gap:14px 13px}
+.preset{
+  height:112px;
+  border-radius:23px;
+  border:2px solid #667180;
+  background:#10151d;
+  box-shadow:
+    0 9px 10px rgba(0,0,0,.72),
+    0 3px 0 #020305,
+    inset 0 2px 2px rgba(255,255,255,.9),
+    inset 0 -8px 14px rgba(0,0,0,.52);
+  transform:translateY(0);
+  transition:transform .08s ease,box-shadow .08s ease,filter .08s ease;
+}
+.preset::before{
+  content:"";
+  position:absolute;
+  inset:2px;
+  z-index:3;
+  pointer-events:none;
+  border-radius:19px;
+  background:linear-gradient(145deg,
+    rgba(255,255,255,.48) 0%,
+    rgba(255,255,255,.10) 13%,
+    rgba(255,255,255,0) 34%,
+    rgba(255,255,255,0) 72%,
+    rgba(255,255,255,.10) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.18),
+    inset 0 7px 9px rgba(255,255,255,.09);
+}
+.preset::after{
+  content:"";
+  position:absolute;
+  z-index:4;
+  left:8%;right:8%;top:4px;height:3px;
+  border-radius:50%;
+  background:rgba(255,255,255,.78);
+  filter:blur(.5px);
+  pointer-events:none;
+}
+.preset img{
+  z-index:1;
+  border-radius:20px;
+}
+.preset:active{
+  transform:translateY(5px) scale(.985);
+  box-shadow:
+    0 3px 4px rgba(0,0,0,.75),
+    inset 0 3px 8px rgba(0,0,0,.45);
+  filter:brightness(.88);
+}
+.preset.active{
+  outline:2px solid rgba(80,180,255,.95);
+  outline-offset:2px;
+  box-shadow:
+    0 0 14px rgba(0,153,255,.85),
+    0 9px 10px rgba(0,0,0,.7),
+    inset 0 2px 2px rgba(255,255,255,.85),
+    inset 0 -8px 14px rgba(0,0,0,.48);
+}
+.now{
+  margin-top:20px;
+  border-radius:25px;
+  border:1px solid #738091;
+  background:linear-gradient(145deg,#1b2532,#0c1118 68%);
+  box-shadow:
+    0 12px 18px rgba(0,0,0,.6),
+    inset 0 1px 1px rgba(255,255,255,.28),
+    inset 0 -8px 18px rgba(0,0,0,.4);
+}
+.art{
+  border:1px solid #667789;
+  box-shadow:
+    0 7px 10px rgba(0,0,0,.65),
+    inset 0 1px 1px rgba(255,255,255,.45);
+}
+.controls button{
+  border:1px solid #66717f;
+  box-shadow:
+    0 7px 9px rgba(0,0,0,.58),
+    inset 0 2px 2px rgba(255,255,255,.38),
+    inset 0 -5px 8px rgba(0,0,0,.28);
+}
+.controls button:active{
+  transform:translateY(3px);
+  box-shadow:0 2px 3px rgba(0,0,0,.7),inset 0 3px 7px rgba(0,0,0,.35);
+}
+.play{
+  background:linear-gradient(#168cff,#0067e9)!important;
+  color:#fff!important;
+  text-shadow:0 1px 2px #003f8e;
+}
+</style>
+
+
+<style>
+.grid{gap:17px 15px;padding:3px}
+.preset{
+ height:118px!important;
+ border:3px solid #8d98a7!important;
+ border-radius:25px!important;
+ padding:5px!important;
+ background:linear-gradient(145deg,#d7dee7 0%,#4b5665 18%,#10151c 48%,#020407 100%)!important;
+ overflow:visible!important;
+ box-shadow:
+   0 11px 0 #020305,
+   0 15px 18px rgba(0,0,0,.78),
+   inset 0 2px 1px rgba(255,255,255,.95),
+   inset 0 -3px 3px rgba(0,0,0,.95)!important;
+}
+.preset img{
+ position:absolute!important;
+ inset:5px!important;
+ width:calc(100% - 10px)!important;
+ height:calc(100% - 10px)!important;
+ border-radius:18px!important;
+ object-fit:cover!important;
+ background:#111!important;
+ box-shadow:
+   inset 0 0 0 1px rgba(255,255,255,.35),
+   inset 0 -18px 24px rgba(0,0,0,.28)!important;
+}
+.preset.rock img,.preset.bandit img,.preset.dbk img,.preset.spotify img{
+ object-fit:contain!important;
+}
+.preset.rock img,.preset.bandit img{background:#080808!important}
+.preset.dbk img{background:#eaf4ff!important}
+.preset.spotify img{background:#1ed760!important}
+.preset::before{
+ inset:6px!important;
+ border-radius:17px!important;
+ background:
+   linear-gradient(132deg,rgba(255,255,255,.62) 0%,rgba(255,255,255,.20) 12%,transparent 30%),
+   linear-gradient(to bottom,rgba(255,255,255,.18),transparent 38%,rgba(0,0,0,.24))!important;
+ box-shadow:
+   inset 0 2px 2px rgba(255,255,255,.8),
+   inset 0 -10px 15px rgba(0,0,0,.28)!important;
+}
+.preset::after{
+ left:13%!important;right:13%!important;top:8px!important;height:4px!important;
+ background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent)!important;
+}
+.preset.active{
+ outline:none!important;
+ border-color:#b9dfff!important;
+ box-shadow:
+   0 0 0 2px #24a8ff,
+   0 0 18px #008cff,
+   0 11px 0 #020305,
+   0 15px 18px rgba(0,0,0,.78),
+   inset 0 2px 1px #fff!important;
+}
+.preset:active{
+ transform:translateY(7px)!important;
+ box-shadow:
+   0 4px 0 #020305,
+   0 7px 9px rgba(0,0,0,.8),
+   inset 0 3px 7px rgba(0,0,0,.5)!important;
+}
+</style>
+
+<style>
+.preset{height:112px!important;padding:0!important;border:0!important;border-radius:20px!important;background:transparent!important;box-shadow:0 8px 12px rgba(0,0,0,.58)!important;overflow:hidden!important}
+.preset img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:fill!important;border-radius:20px!important;background:transparent!important;box-shadow:none!important}
+.preset::before,.preset::after{display:none!important}
+.preset.active{outline:2px solid #31aaff!important;outline-offset:2px!important;box-shadow:0 0 17px #008cff,0 8px 12px rgba(0,0,0,.65)!important}
+.preset:active{transform:translateY(4px) scale(.985)!important;filter:brightness(.9)!important}
 </style></head><body><main class="app">
 <div class="head"><b>WEBBRADIO</b><div id="clock" class="clock">--:--</div><div id="date" class="date"></div></div>
 <div class="grid">
-<button class="preset p1" data-name="P1" data-url="https://live1.sr.se/p1-mp3-96" data-srid="132" data-logo="https://static-cdn.sr.se/images/132/4a5e66b7-c935-415d-a524-c060ea227de2.jpg?preset=api-default-square"><img src="https://static-cdn.sr.se/images/132/4a5e66b7-c935-415d-a524-c060ea227de2.jpg?preset=api-default-square"><span>P1</span></button>
-<button class="preset p2" data-name="P2" data-url="https://live1.sr.se/p2-mp3-96" data-srid="163" data-logo="https://static-cdn.sr.se/images/163/684f7bac-3e2e-4a7a-969e-6892b70069d6.jpg?preset=api-default-square"><img src="https://static-cdn.sr.se/images/163/684f7bac-3e2e-4a7a-969e-6892b70069d6.jpg?preset=api-default-square"><span>P2</span></button>
-<button class="preset p3" data-name="P3" data-url="https://live1.sr.se/p3-mp3-96" data-srid="164" data-logo="https://static-cdn.sr.se/images/164/1adb95c9-cc4e-452f-b1ed-0602b3e15c46.jpg?preset=api-default-square"><img src="https://static-cdn.sr.se/images/164/1adb95c9-cc4e-452f-b1ed-0602b3e15c46.jpg?preset=api-default-square"><span>P3</span></button>
-<button class="preset p4" data-name="P4 Sjuhärad" data-url="https://live1.sr.se/p4sju-mp3-96" data-srid="206" data-logo="https://static-cdn.sr.se/images/206/44d3f4f5-66a7-4afb-bc58-0cb3caa79e61.jpg?preset=api-default-square"><img src="https://static-cdn.sr.se/images/206/44d3f4f5-66a7-4afb-bc58-0cb3caa79e61.jpg?preset=api-default-square"><span>P4 Sjuhärad</span></button>
-<button class="preset rock" data-name="Rockklassiker" data-url="https://live-bauerse-fm.sharp-stream.com/rockklassiker_instream_se_aacp" data-logo="rockklassiker-logo.png"><img src="rockklassiker-logo.png" alt="Rockklassiker"><span>Rockklassiker</span></button>
-<button class="preset bandit" data-name="Bandit Rock" data-url="https://fm02-ice.stream.khz.se/fm02_mp3" data-logo="bandit-logo.png"><img src="bandit-logo.png" alt="Bandit Rock"><span>Bandit Rock</span></button>
-<button class="preset dbk" data-name="Dansbandskanalen" data-url="https://stream.dbmedia.se/dbkMP3" data-logo="dansbandskanalen-logo.png"><img src="dansbandskanalen-logo.png" alt="Dansbandskanalen"><span>Dansbandskanalen</span></button>
-<button class="preset spotify" id="spotify" data-logo="spotify-logo.png"><img src="spotify-logo.png" alt="Spotify"><span>Öppna Spotify</span></button>
+<button class="preset p1" data-name="P1" data-url="https://live1.sr.se/p1-mp3-96" data-srid="132" data-logo="p1-button.png"><img src="p1-button.png" alt=""></button>
+<button class="preset p2" data-name="P2" data-url="https://live1.sr.se/p2-mp3-96" data-srid="163" data-logo="p2-button.png"><img src="p2-button.png" alt=""></button>
+<button class="preset p3" data-name="P3" data-url="https://live1.sr.se/p3-mp3-96" data-srid="164" data-logo="p3-button.png"><img src="p3-button.png" alt=""></button>
+<button class="preset p4" data-name="P4 Sjuhärad" data-url="https://live1.sr.se/p4sju-mp3-96" data-srid="206" data-logo="p4-sjuharad-button.png"><img src="p4-sjuharad-button.png" alt=""></button>
+<button class="preset rock" data-name="Rockklassiker" data-url="https://live-bauerse-fm.sharp-stream.com/rockklassiker_instream_se_aacp" data-logo="rockklassiker-button.png"><img src="rockklassiker-button.png" alt=""></button>
+<button class="preset bandit" data-name="Bandit Rock" data-url="https://fm02-ice.stream.khz.se/fm02_mp3" data-logo="bandit-button.png"><img src="bandit-button.png" alt=""></button>
+<button class="preset dbk" data-name="Dansbandskanalen" data-url="https://stream.dbmedia.se/dbkMP3" data-logo="dansbandskanalen-button.png"><img src="dansbandskanalen-button.png" alt=""></button>
+<button class="preset spotify" id="spotify" data-logo="spotify-button.png"><img src="spotify-button.png" alt="Spotify"></button>
 </div>
 <section class="now"><img id="art" class="art" alt=""><div><div id="station" class="station">Välj station</div><div id="program" class="program">Redo</div><div id="song" class="song"></div><div id="meta" class="meta"></div></div></section>
 <div class="controls"><button id="pp" class="play">▶ Spela</button><button id="stop" class="stop">■ Stoppa</button></div>
@@ -61,3 +236,11 @@ stop.onclick=()=>{a.pause();a.removeAttribute('src');a.load();pp.textContent='�
 spotify.onclick=()=>{a.pause();location.href='spotify://';setTimeout(()=>location.href='https://open.spotify.com/',800)};
 setInterval(updateMeta,30000);
 </script></main></body></html>
+<style>
+.preset.rock img,.preset.bandit img,.preset.dbk img,.preset.spotify img{
+  object-fit:contain;
+  background:#fff;
+}
+.preset.spotify img{background:#1ed760}
+.preset.active{outline:3px solid #fff;outline-offset:-3px}
+</style>
