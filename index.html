@@ -191,41 +191,7 @@ body{
 .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
 .preset{width:100%!important;height:auto!important;aspect-ratio:3.45/1!important;min-width:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:18px!important;overflow:hidden!important;background:#000!important;position:relative!important}
 .preset img,.preset.rock img,.preset.bandit img,.preset.dbk img,.preset.spotify img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover!important;object-position:center!important;margin:0!important;padding:0!important;border-radius:18px!important;display:block!important}
-</style>
-<style>
-.volumeControls{
-  display:grid;
-  grid-template-columns:1fr 1.15fr 1fr;
-  gap:9px;
-  align-items:stretch;
-  margin-top:11px;
-}
-.volumeControls button,.volumeReadout{
-  min-height:56px;
-  border-radius:17px;
-  border:1px solid #66717f;
-  background:linear-gradient(#303946,#151b24);
-  color:#fff;
-  box-shadow:0 7px 9px rgba(0,0,0,.58),inset 0 2px 2px rgba(255,255,255,.28),inset 0 -5px 8px rgba(0,0,0,.35);
-}
-.volumeControls button{
-  font-size:18px;
-  font-weight:850;
-}
-.volumeControls button:active{
-  transform:translateY(3px);
-  box-shadow:0 2px 3px rgba(0,0,0,.7),inset 0 3px 7px rgba(0,0,0,.4);
-}
-.volumeReadout{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-}
-.volumeReadout span{font-size:10px;letter-spacing:1.5px;color:#93a0b2}
-.volumeReadout strong{font-size:20px;margin-top:2px}
-</style>
-</head><body><main class="app">
+</style></head><body><main class="app">
 <div class="head"><b>WEBBRADIO</b><div id="clock" class="clock">--:--</div><div id="date" class="date"></div></div>
 <div class="grid">
 <button class="preset p1" data-name="P1" data-url="https://live1.sr.se/p1-mp3-96" data-srid="132" data-logo="p1-button.png"><img src="p1-button.png" alt=""></button>
@@ -239,11 +205,6 @@ body{
 </div>
 <section class="now"><img id="art" class="art" alt=""><div><div id="station" class="station">Välj station</div><div id="program" class="program">Redo</div><div id="song" class="song"></div><div id="meta" class="meta"></div></div></section>
 <div class="controls"><button id="pp" class="play">▶ Spela</button><button id="stop" class="stop">■ Stoppa</button></div>
-<div class="volumeControls">
-<button type="button" id="volDown">🔉 −</button>
-<div class="volumeReadout"><span>VOLYM</span><strong id="volValue">80%</strong></div>
-<button type="button" id="volUp">🔊 +</button>
-</div>
 <div class="note">SR: program + aktuell låt när metadata finns. Uppdateras var 30:e sekund.</div>
 <audio id="audio" playsinline preload="none"></audio>
 <script>
@@ -278,25 +239,6 @@ pp.onclick=async()=>{if(!cur)return;if(a.paused){try{await a.play();pp.textConte
 stop.onclick=()=>{a.pause();a.removeAttribute('src');a.load();pp.textContent='▶ Spela';program.textContent='Stoppad'};
 spotify.onclick=()=>{a.pause();location.href='spotify://';setTimeout(()=>location.href='https://open.spotify.com/',800)};
 setInterval(updateMeta,30000);
-
-const volDown=document.getElementById('volDown');
-const volUp=document.getElementById('volUp');
-const volValue=document.getElementById('volValue');
-let webVolume=0.8;
-a.volume=webVolume;
-function showVolume(){
-  volValue.textContent=Math.round(webVolume*100)+'%';
-}
-volDown.addEventListener('click',()=>{
-  webVolume=Math.max(0,Math.round((webVolume-0.1)*10)/10);
-  a.volume=webVolume; showVolume();
-});
-volUp.addEventListener('click',()=>{
-  webVolume=Math.min(1,Math.round((webVolume+0.1)*10)/10);
-  a.volume=webVolume; showVolume();
-});
-showVolume();
-
 </script></main></body></html>
 <style>
 .preset.rock img,.preset.bandit img,.preset.dbk img,.preset.spotify img{
